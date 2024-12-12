@@ -7,6 +7,14 @@ Fraud Prediction: Classifies transactions as fraudulent or non-fraudulent.
 Web Application Interface: A simple Flask web app that allows users to input transaction details and receive a fraud prediction.
 Model and Scaler: The model is trained using financial transaction data, and the scaler ensures that the input features are properly normalized before prediction.
 
+
+
+https://github.com/user-attachments/assets/2ecf3351-ec28-4e80-8931-d311cba65c91
+
+
+
+
+
 Technologies Used
 Python: Programming language used for model training and web application.
 Flask: Web framework to build the application.
