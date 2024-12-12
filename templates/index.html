@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fraud Detection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background:url('https://itcloudreviews.com/wp-content/uploads/2023/03/fraud-detection.jpg') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: #fff;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 500px;
+            transition: transform 0.3s ease;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+        }
+
+        h1 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        input, select, button {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        input:focus, select:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        .result {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.3rem;
+            color: #28a745;
+            font-weight: bold;
+            padding: 10px;
+            border: 2px dashed #28a745;
+            border-radius: 5px;
+            background: #e9f7ef;
+        }
+
+        .inputs-display {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .inputs-display h3 {
+            margin-bottom: 10px;
+            color: #007bff;
+        }
+
+        .inputs-display p {
+            margin: 8px 0;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Fraud Detection Model</h1>
+        <form action="/predict" method="POST">
+            <label for="step">Step:</label>
+            <input type="text" id="step" name="step" value="{{ user_inputs.get('step', '') }}" placeholder="Enter step number">
+
+            <label for="type">Transaction Type:</label>
+            <select id="type" name="type">
+                <option value="CASH_OUT" {% if user_inputs.get('type') == 'CASH_OUT' %}selected{% endif %}>CASH_OUT</option>
+                <option value="TRANSFER" {% if user_inputs.get('type') == 'TRANSFER' %}selected{% endif %}>TRANSFER</option>
+            </select>
+
+            <label for="amount">Amount:</label>
+            <input type="text" id="amount" name="amount" value="{{ user_inputs.get('amount', '') }}" placeholder="Enter amount">
+
+            <label for="oldbalanceOrg">Old Balance (Origin):</label>
+            <input type="text" id="oldbalanceOrg" name="oldbalanceOrg" value="{{ user_inputs.get('oldbalanceOrg', '') }}" placeholder="Enter old balance (origin)">
+
+            <label for="newbalanceOrig">New Balance (Origin):</label>
+            <input type="text" id="newbalanceOrig" name="newbalanceOrig" value="{{ user_inputs.get('newbalanceOrig', '') }}" placeholder="Enter new balance (origin)">
+
+            <label for="oldbalanceDest">Old Balance (Destination):</label>
+            <input type="text" id="oldbalanceDest" name="oldbalanceDest" value="{{ user_inputs.get('oldbalanceDest', '') }}" placeholder="Enter old balance (destination)">
+
+            <label for="newbalanceDest">New Balance (Destination):</label>
+            <input type="text" id="newbalanceDest" name="newbalanceDest" value="{{ user_inputs.get('newbalanceDest', '') }}" placeholder="Enter new balance (destination)">
+
+            <button type="submit">Predict</button>
+        </form>
+
+        {% if prediction %}
+            <div class="result">
+                Prediction Result: {{ prediction }}
+            </div>
+            <div class="inputs-display">
+                <h3>Entered Values:</h3>
+                <p><strong>Step:</strong> {{ user_inputs.get('step', '') }}</p>
+                <p><strong>Transaction Type:</strong> {{ user_inputs.get('type', '') }}</p>
+                <p><strong>Amount:</strong> {{ user_inputs.get('amount', '') }}</p>
+                <p><strong>Old Balance (Origin):</strong> {{ user_inputs.get('oldbalanceOrg', '') }}</p>
+                <p><strong>New Balance (Origin):</strong> {{ user_inputs.get('newbalanceOrig', '') }}</p>
+                <p><strong>Old Balance (Destination):</strong> {{ user_inputs.get('oldbalanceDest', '') }}</p>
+                <p><strong>New Balance (Destination):</strong> {{ user_inputs.get('newbalanceDest', '') }}</p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
